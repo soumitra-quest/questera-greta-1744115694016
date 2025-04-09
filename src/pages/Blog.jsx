@@ -16,13 +16,12 @@ const Blog = () => {
   const fetchPosts = async () => {
     try {
       const { data, error } = await supabase
-        .from('posts')  // Changed back to 'posts'
+        .from('posts')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
-      // Transform data to match our component's expectations
       const transformedPosts = data?.map(post => ({
         id: post.id,
         title: post.title,
@@ -43,7 +42,6 @@ const Blog = () => {
     }
   };
 
-  // Rest of the component remains the same
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[50vh]">
@@ -54,7 +52,7 @@ const Blog = () => {
 
   if (error) {
     return (
-      <div className="text-center text-red-600 py-8">
+      <div className="text-center text-red-400 py-8">
         Error loading posts: {error}
       </div>
     );
@@ -62,9 +60,9 @@ const Blog = () => {
 
   return (
     <div className="max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold text-primary mb-8">Latest Posts</h1>
+      <h1 className="text-3xl font-bold text-gray-100 mb-8">Latest Posts</h1>
       {posts.length === 0 ? (
-        <div className="text-center text-gray-500 py-8">
+        <div className="text-center text-gray-400 py-8">
           No posts found.
         </div>
       ) : (
@@ -75,21 +73,21 @@ const Blog = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className="bg-primary-dark rounded-lg shadow-xl overflow-hidden border border-dark-700 hover:border-dark-600 transition-colors"
             >
-              <img 
-                src={post.image_url || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee'} 
+              <img
+                src={post.image_url || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee'}
                 alt={post.title}
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
                 <span className="text-sm text-accent font-semibold">{post.category}</span>
-                <h2 className="text-xl font-bold text-primary mt-2 mb-3">
+                <h2 className="text-xl font-bold text-gray-100 mt-2 mb-3">
                   <Link to={`/post/${post.id}`} className="hover:text-accent transition-colors">
                     {post.title}
                   </Link>
                 </h2>
-                <p className="text-secondary mb-4">{post.excerpt}</p>
+                <p className="text-gray-400 mb-4">{post.excerpt}</p>
                 <div className="flex justify-between items-center text-sm text-gray-500">
                   <span>{post.author}</span>
                   <span>{format(new Date(post.created_at), 'MMM d, yyyy')}</span>

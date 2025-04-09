@@ -13,14 +13,13 @@ const Post = () => {
   const fetchPost = useCallback(async () => {
     try {
       const { data, error } = await supabase
-        .from('posts')  // Changed back to 'posts'
+        .from('posts')
         .select('*')
         .eq('id', id)
         .single();
 
       if (error) throw error;
 
-      // Transform data to match component expectations
       const transformedPost = data ? {
         id: data.id,
         title: data.title,
@@ -55,36 +54,36 @@ const Post = () => {
 
   if (error || !post) {
     return (
-      <div className="text-center text-red-600 py-8">
+      <div className="text-center text-red-400 py-8">
         {error || 'Post not found'}
       </div>
     );
   }
 
   return (
-    <motion.article 
+    <motion.article
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="max-w-3xl mx-auto"
     >
-      <img 
-        src={post.image_url || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee'} 
+      <img
+        src={post.image_url || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee'}
         alt={post.title}
-        className="w-full h-64 object-cover rounded-lg mb-8"
+        className="w-full h-64 object-cover rounded-lg mb-8 shadow-xl"
       />
       <header className="mb-8">
-        <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+        <div className="flex items-center gap-4 text-sm text-gray-400 mb-4">
           <span>{post.author}</span>
           <span>•</span>
           <span>{format(new Date(post.created_at), 'MMM d, yyyy')}</span>
           <span>•</span>
           <span className="text-accent">{post.category}</span>
         </div>
-        <h1 className="text-4xl font-bold text-primary">{post.title}</h1>
+        <h1 className="text-4xl font-bold text-gray-100">{post.title}</h1>
       </header>
-      <div className="prose prose-lg">
+      <div className="prose prose-lg prose-invert">
         {post.content.split('\n').map((paragraph, index) => (
-          <p key={index} className="mb-4 text-secondary">
+          <p key={index} className="mb-4 text-gray-300">
             {paragraph}
           </p>
         ))}

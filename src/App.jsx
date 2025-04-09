@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-primary text-gray-100">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <Routes>
@@ -20,5 +20,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
